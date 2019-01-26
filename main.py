@@ -13,6 +13,6 @@ view_manager = ScrollingManager()
 view_manager.add(map['Tile Layer 1'])
 view_manager.set_focus(20, 20)
 
-main_scene = cocos.scene.Scene(view_manager)
+main_scene = Scene(view_manager)
 
 director.run(main_scene)
