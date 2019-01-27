@@ -13,6 +13,11 @@ const cheeseimage = document.getElementById('cheese');
 let width  = canvas.width;
 let height = canvas.height;
 
+let url_string = window.location.href
+let url = new URL(url_string);
+let levelpath = url.searchParams.get("l");
+let bombtime = parseInt(url.searchParams.get("b"));
+
 let currentLevel;
 
 let controls = {
@@ -22,7 +27,7 @@ let controls = {
     down: false,
     jump: false
 }
-let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0});
+let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0}, bombtime=bombtime);
 let cats = [];
 //let cat = new Cat({x:0,y:0});
 let president = new President({x:0,y:0});
@@ -202,7 +207,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-loadLevel("./Map-2.json", () => {
+loadLevel(levelpath+".json", () => {
     update();
 });
 const camera = new Camera();

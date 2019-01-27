@@ -1,14 +1,14 @@
 class Mouse {
-  constructor(position={x:0,y:0}, velocity={x:1,y:0}, width=58, height=32) {
+  constructor(position={x:0,y:0}, velocity={x:1,y:0}, bombtime=60) {
     this.position = position;
     this.velocity = velocity;
-    this.width = width;
-    this.height = height;
+    this.width = 58;
+    this.height = 32;
     this.onGround = false;
     this.speed = 5;
     this.climbCounter = 30;
     this.facingLeft = false;
-    this.bombcounter = 10*60;
+    this.bombcounter = bombtime*60;
   }
 
   draw() {
