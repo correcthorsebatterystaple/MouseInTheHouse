@@ -21,7 +21,7 @@ let controls = {
     jump: false
 }
 let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0});
-let president = {position:{}};
+let president = new President({x:0,y:0});
 let cat = {position:{}};
 document.addEventListener('keydown', event => {
     if (event.keyCode == 97-32) {
