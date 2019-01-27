@@ -70,10 +70,14 @@ function loadLevel(path, callback) {
             let x = 0, y = 0;
             currentLevel.layers[collisionlayer].tiles.forEach(tile => {
                 if (tile) {
+                    if (tile.id == 128) {
+                        mouse.x = x;
+                        mouse.y = y;
+                    }
                     if (tile.id >= 64 && tile.id < 128) {
                         if (tile.id % 2 == 0) {
                             currentLevel.holes[(tile.id-64)/2] = new Hole(
-                                {x: x, y: y}
+                                {x: x, y: y}, {x: 0, y: 0}, mouse
                             );
                         } else {
                             currentLevel.holes[Math.ceil((tile.id-64)/2)].hole2 = {
@@ -81,11 +85,11 @@ function loadLevel(path, callback) {
                             };
                         }
                     }
-                    x++;
-                    if (x==currentLevel.width) {
-                        y++;
-                        x=0;
-                    }
+                }
+                x++;
+                if (x==currentLevel.width) {
+                    y++;
+                    x=0;
                 }
             })
             callback();
