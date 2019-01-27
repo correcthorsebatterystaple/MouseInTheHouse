@@ -23,7 +23,8 @@ let controls = {
     jump: false
 }
 let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0});
-let cat = new Cat({x:0,y:0});
+let cats = [];
+//let cat = new Cat({x:0,y:0});
 let president = new President({x:0,y:0});
 let cheeses = [];
 document.addEventListener('keydown', event => {
@@ -92,8 +93,7 @@ function loadLevel(path, callback) {
                         president.position.y = y*32;
                     }
                     if (tile.id == 130) { // cat
-                        cat.position.x = x*32;
-                        cat.position.y = y*32;
+                        cats.push(new Cat({x:x*32,y:y*32}));
                     }
                     if (tile.id == 131) { // cheese
                         cheeses.push(new Cheese({x:x*32,y:y*32}));

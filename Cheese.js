@@ -14,6 +14,7 @@ class Cheese {
             );
             if (distance < 32) {
                 mouse.speed ++;
+                this.collected = true;
             }
             this.draw();
         }
