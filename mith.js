@@ -7,6 +7,7 @@ const mouseimage = document.getElementById('mouse');
 const mouseimageleft = document.getElementById('mouseleft');
 const numbersimage = document.getElementById('numbers');
 const catimage = document.getElementById('cat');
+const catimageleft = document.getElementById('catleft');
 
 let width  = canvas.width;
 let height = canvas.height;
@@ -190,7 +191,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-loadLevel("./Map-2-2.json", () => {
+loadLevel("./Map-2.json", () => {
     update();
 });
 const camera = new Camera();
