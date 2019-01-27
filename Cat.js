@@ -12,7 +12,7 @@ class Cat {
             Math.pow(this.position.x - mouse.position.x, 2) +
             Math.pow(this.position.y - mouse.position.y, 2)
         );
-        if (distance < 64) {
+        if (distance < 10) {
             window.location.href = "./yougoteaten.html";
         }
     }
