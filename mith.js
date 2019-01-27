@@ -2,6 +2,7 @@ const canvas = document.getElementById('gamecanvas');
 const ctx = canvas.getContext("2d");
 
 const tilemap = document.getElementById("tilemap");
+const bgimage = document.getElementById("bg");
 
 let width  = canvas.width;
 let height = canvas.height;
@@ -65,6 +66,28 @@ function loadLevel(path, callback) {
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             currentLevel = JSON.parse(this.responseText);
+            currentLevel.holes = [];
+            let x = 0, y = 0;
+            currentLevel.layers[collisionlayer].tiles.forEach(tile => {
+                if (tile) {
+                    if (tile.id >= 64 && tile.id < 128) {
+                        if (tile.id % 2 == 0) {
+                            currentLevel.holes[(tile.id-64)/2] = new Hole(
+                                {x: x, y: y}
+                            );
+                        } else {
+                            currentLevel.holes[Math.ceil((tile.id-64)/2)].hole2 = {
+                                x: x, y: y
+                            };
+                        }
+                    }
+                    x++;
+                    if (x==currentLevel.width) {
+                        y++;
+                        x=0;
+                    }
+                }
+            })
             callback();
         }
     };
@@ -85,23 +108,39 @@ function drawTile(xt, yt, xoff, yoff, layer) {
 
 class Camera {
     constructor() {
+        this.xoff = 0;
+        this.yoff = 0;
     }
 
     draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let xoff = mouse.position.x - width/2;
-        let yoff = mouse.position.y - height/2;
-        let x1t = Math.floor(xoff/32);
-        let y1t = Math.floor(yoff/32);
-        let tnx = Math.ceil(width/32)+1;
-        let tny = Math.ceil(height/32)+1;
-        for (let yt=y1t; yt<=y1t+tny; yt++) {
-            for (let xt=x1t; xt<=x1t+tnx; xt++) {
+        ctx.drawImage(bgimage, 0, 0);
+        this.xoff = mouse.position.x - width/2;
+        this.yoff = mouse.position.y - height/2;
+        this.x1t = Math.floor(this.xoff/32);
+        this.y1t = Math.floor(this.yoff/32);
+        this.tnx = Math.ceil(width/32)+1;
+        this.tny = Math.ceil(height/32)+1;
+        for (let yt=this.y1t; yt<=this.y1t+this.tny; yt++) {
+            for (let xt=this.x1t; xt<=this.x1t+this.tnx; xt++) {
                 for (let layer = 1; layer < currentLevel.layers.length; layer++) {
-                    drawTile(xt, yt, xoff, yoff, layer);
+                    drawTile(xt, yt, this.xoff, this.yoff, layer);
                 }
             }
         }
+    }
+
+    tileToScreenSpace({x, y}) {
+        if(!this.xoff) this.draw();
+        x *= 32;
+        x -= this.xoff;
+        y *= 32;
+        y -= this.yoff;
+        return {x:x,y:y};
+    }
+
+    pixelToScreenSpace({x, y}) {
+        if(!this.xoff) this.draw();
+        return {x:x-xoff,y:y-yoff};
     }
 }
 
@@ -110,6 +149,9 @@ function update() {
     mouse.controls = controls;
     mouse.draw();
     mouse.update();
+    currentLevel.holes.forEach(hole => {
+        hole.update();
+    })
     ctx.fillStyle = "rgb(200, 170, 80)";
     ctx.fillRect(width/2-16, height/2-32, 32, 32);
     requestAnimationFrame(update);
