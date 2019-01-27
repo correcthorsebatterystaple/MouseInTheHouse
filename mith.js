@@ -5,6 +5,7 @@ const tilemap = document.getElementById("tilemap");
 const bgimage = document.getElementById("bg");
 const mouseimage = document.getElementById('mouse');
 const mouseimageleft = document.getElementById('mouseleft');
+const numbersimage = document.getElementById('numbers');
 
 let width  = canvas.width;
 let height = canvas.height;

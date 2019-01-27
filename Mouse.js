@@ -8,6 +8,7 @@ class Mouse {
     this.speed = 5;
     this.climbCounter = 30;
     this.facingLeft = false;
+    this.bombcounter = 60*60;
   }
 
   draw() {
@@ -15,6 +16,23 @@ class Mouse {
       ctx.drawImage(mouseimageleft, canvas.width/2-this.width/2, canvas.height/2-this.height);
     } else {
       ctx.drawImage(mouseimage, canvas.width/2-this.width/2, canvas.height/2-this.height);
+    }
+
+    //draw the bomb counter
+    let secondsleft = Math.floor(this.bombcounter/60).toString();
+    if (secondsleft.length < 2) {
+      secondsleft = '0'+secondsleft;
+    }
+    let milliseconds = Math.floor((this.bombcounter%60)*(100/60)).toString();
+    if (milliseconds.length < 2) {
+      milliseconds = '0'+milliseconds;
+    }
+    for (let i=0; i<secondsleft.length; i++) {
+      ctx.drawImage(numbersimage, parseInt(secondsleft.charAt(i))*32, 0, 32, 32, 100+i*32, 100, 32, 32);
+    }
+    ctx.drawImage(numbersimage, 0, 32, 32, 32, 164, 100, 32, 32);
+    for (let i=0; i<milliseconds.length; i++) {
+      ctx.drawImage(numbersimage, parseInt(milliseconds.charAt(i))*32, 0, 32, 32, 164+32+i*32, 100, 32, 32);
     }
   }
 
@@ -40,7 +58,6 @@ class Mouse {
      //climb
     if (this.controls.up) {
       if (this.climbCounter > 0) {
-        console.log(this.climbCounter);
         this.climbCounter--;
         newPos = {
           x:this.position.x+this.velocity.x,
@@ -121,8 +138,17 @@ class Mouse {
     return this.velocity;
   }
 
+  explode() {
+    //booms
+  }
+
   update() {
     this.move();
+    if (this.bombcounter == 0) {
+      this.explode();
+    } else {
+      this.bombcounter--;
+    }
   }
 
 }
