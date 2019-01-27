@@ -8,6 +8,7 @@ const mouseimageleft = document.getElementById('mouseleft');
 const numbersimage = document.getElementById('numbers');
 const catimage = document.getElementById('cat');
 const catimageleft = document.getElementById('catleft');
+const cheeseimage = document.getElementById('cheese');
 
 let width  = canvas.width;
 let height = canvas.height;
@@ -24,6 +25,7 @@ let controls = {
 let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0});
 let cat = new Cat({x:0,y:0});
 let president = new President({x:0,y:0});
+let cheeses = [];
 document.addEventListener('keydown', event => {
     if (event.keyCode == 97-32) {
         controls.left = true;
@@ -92,6 +94,9 @@ function loadLevel(path, callback) {
                     if (tile.id == 130) { // cat
                         cat.position.x = x*32;
                         cat.position.y = y*32;
+                    }
+                    if (tile.id == 131) { // cheese
+                        cheeses.push(new Cheese({x:x*32,y:y*32}));
                     }
                     if (tile.id >= 64 && tile.id < 128) {
                         //let index = Math.floor((tile.id-64)/2);
@@ -185,6 +190,9 @@ function update() {
     mouse.update();
     cat.update();
     cat.draw();
+    cheeses.forEach(cheese=> {
+        cheese.update();
+    })
     currentLevel.holes.forEach(hole => {
         hole.update();
     });
