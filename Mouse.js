@@ -145,7 +145,9 @@ class Mouse {
       Math.pow(this.position.y - president.position.y, 2)
     );
     if (distance < 300) {
-      console.log("you win");
+      window.location.href = "./youwin.html";
+    } else {
+      window.location.href = "./youblewup.html";
     }
   }
 

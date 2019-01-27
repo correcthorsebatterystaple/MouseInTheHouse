@@ -12,16 +12,16 @@ class Cat {
             Math.pow(this.position.x - mouse.position.x, 2) +
             Math.pow(this.position.y - mouse.position.y, 2)
         );
-        if (distance < 10) {
+        if (distance < 32) {
             window.location.href = "./yougoteaten.html";
         }
     }
     draw() {
         let scr = camera.pixelToScreenSpace(this.position);
         if (this.dx > 0) {
-            ctx.drawImage(catimage, scr.x, scr.y-32);
+            ctx.drawImage(catimage, scr.x-64, scr.y-32);
         } else {
-            ctx.drawImage(catimageleft, scr.x, scr.y-32);
+            ctx.drawImage(catimageleft, scr.x-64, scr.y-32);
         }
     }
 }
