@@ -6,6 +6,7 @@ const bgimage = document.getElementById("bg");
 const mouseimage = document.getElementById('mouse');
 const mouseimageleft = document.getElementById('mouseleft');
 const numbersimage = document.getElementById('numbers');
+const catimage = document.getElementById('cat');
 
 let width  = canvas.width;
 let height = canvas.height;
@@ -20,6 +21,8 @@ let controls = {
     jump: false
 }
 let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0});
+let president = {};
+let cat = {};
 document.addEventListener('keydown', event => {
     if (event.keyCode == 97-32) {
         controls.left = true;
@@ -75,9 +78,17 @@ function loadLevel(path, callback) {
             let x = 0, y = 0;
             currentLevel.layers[collisionlayer].tiles.forEach(tile => {
                 if (tile) {
-                    if (tile.id == 128) {
-                        mouse.x = x;
-                        mouse.y = y;
+                    if (tile.id == 128) { //start
+                        mouse.position.x = x*32;
+                        mouse.position.y = y*32;
+                    }
+                    if (tile.id = 129) { //president
+                        president.position.x = x*32;
+                        president.position.y = y*32;
+                    }
+                    if (tile.id = 130) { // cat
+                        cat.position.x = x*32;
+                        cat.position.y = y*32;
                     }
                     if (tile.id >= 64 && tile.id < 128) {
                         let index = Math.floor((tile.id-64)/2);
