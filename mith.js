@@ -79,20 +79,23 @@ function loadLevel(path, callback) {
             currentLevel.layers[collisionlayer].tiles.forEach(tile => {
                 if (tile) {
                     if (tile.id == 128) { //start
+                        mouse.x = x;
+                        mouse.y = y;
                         mouse.position.x = x*32;
-                        mouse.position.y = y*32;
+                        mouse.position.y = y*32-8;
                     }
-                    if (tile.id = 129) { //president
+                    if (tile.id == 129) { //president
                         president.position.x = x*32;
                         president.position.y = y*32;
                     }
-                    if (tile.id = 130) { // cat
+                    if (tile.id == 130) { // cat
                         cat.position.x = x*32;
                         cat.position.y = y*32;
                     }
                     if (tile.id >= 64 && tile.id < 128) {
-                        let index = Math.floor((tile.id-64)/2);
+                        //let index = Math.floor((tile.id-64)/2);
                         if (tile.id % 2 == 0) {
+                            let index = (tile.id-64)/2;
                             if (currentLevel.holes[index]) {
                                 currentLevel.holes[index].hole[1] = {x:x*32,y:y*32};
                             } else {
@@ -101,11 +104,12 @@ function loadLevel(path, callback) {
                                 );
                             }
                         } else {
+                            let index = (tile.id-65)/2;
                             if (currentLevel.holes[index]) {
                                 currentLevel.holes[index].hole[2] = {x:x*32,y:y*32};
                             } else {
                                 currentLevel.holes[index] = new Hole(
-                                    {x: x*32, y: y*32}, {x: 0, y: 0}, mouse
+                                    {x: 0, y: 0}, {x: x*32, y: y*32}, mouse
                                 );
                             }
                         }

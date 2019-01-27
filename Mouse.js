@@ -8,7 +8,7 @@ class Mouse {
     this.speed = 5;
     this.climbCounter = 30;
     this.facingLeft = false;
-    this.bombcounter = 60*60;
+    this.bombcounter = 10*60;
   }
 
   draw() {
@@ -140,6 +140,13 @@ class Mouse {
 
   explode() {
     //booms
+    let distance = Math.sqrt(
+      Math.pow(this.position.x - president.position.x, 2) +
+      Math.pow(this.position.y - president.position.y, 2)
+    );
+    if (distance < 1000) {
+      console.log("you win");
+    }
   }
 
   update() {
