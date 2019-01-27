@@ -3,6 +3,8 @@ const ctx = canvas.getContext("2d");
 
 const tilemap = document.getElementById("tilemap");
 const bgimage = document.getElementById("bg");
+const mouseimage = document.getElementById('mouse');
+const mouseimageleft = document.getElementById('mouseleft');
 
 let width  = canvas.width;
 let height = canvas.height;
@@ -77,14 +79,23 @@ function loadLevel(path, callback) {
                         mouse.y = y;
                     }
                     if (tile.id >= 64 && tile.id < 128) {
+                        let index = Math.floor((tile.id-64)/2);
                         if (tile.id % 2 == 0) {
-                            currentLevel.holes[(tile.id-64)/2] = new Hole(
-                                {x: x*32, y: y*32}, {x: 0, y: 0}, mouse
-                            );
+                            if (currentLevel.holes[index]) {
+                                currentLevel.holes[index].hole[1] = {x:x*32,y:y*32};
+                            } else {
+                                currentLevel.holes[index] = new Hole(
+                                    {x: x*32, y: y*32}, {x: 0, y: 0}, mouse
+                                );
+                            }
                         } else {
-                            currentLevel.holes[Math.floor((tile.id-64)/2)].hole[2] = {
-                                x: x*32, y: y*32
-                            };
+                            if (currentLevel.holes[index]) {
+                                currentLevel.holes[index].hole[2] = {x:x*32,y:y*32};
+                            } else {
+                                currentLevel.holes[index] = new Hole(
+                                    {x: x*32, y: y*32}, {x: 0, y: 0}, mouse
+                                );
+                            }
                         }
                     }
                 }
@@ -157,9 +168,7 @@ function update() {
     mouse.update();
     currentLevel.holes.forEach(hole => {
         hole.update();
-    })
-    ctx.fillStyle = "rgb(200, 170, 80)";
-    ctx.fillRect(width/2-16, height/2-32, 32, 32);
+    });
     requestAnimationFrame(update);
 }
 

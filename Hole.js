@@ -10,10 +10,10 @@ class Hole {
         let otherhole = !(hole-1)+1;
         if (!mouse.justTeleported) {
             if (
-                mouse.position.x < this.hole[hole].x+mouse.width &&
-                mouse.position.x > this.hole[hole].x-mouse.width &&
-                mouse.position.y < this.hole[hole].y+mouse.height &&
-                mouse.position.y > this.hole[hole].y-mouse.height
+                mouse.position.x < this.hole[hole].x+mouse.width/2 &&
+                mouse.position.x > this.hole[hole].x-mouse.width/2 &&
+                mouse.position.y < this.hole[hole].y+mouse.height/2 &&
+                mouse.position.y > this.hole[hole].y-mouse.height/2
             ) {
                 mouse.position.x = this.hole[otherhole].x;
                 mouse.position.y = this.hole[otherhole].y;

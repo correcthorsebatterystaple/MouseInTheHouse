@@ -1,5 +1,5 @@
 class Mouse {
-  constructor(position={x:0,y:0}, velocity={x:1,y:0}, width=32, height=32) {
+  constructor(position={x:0,y:0}, velocity={x:1,y:0}, width=58, height=32) {
     this.position = position;
     this.velocity = velocity;
     this.width = width;
@@ -7,15 +7,23 @@ class Mouse {
     this.onGround = false;
     this.speed = 2;
     this.climbCounter = 30;
+    this.facingLeft = false;
   }
 
   draw() {
+    if (this.facingLeft) {
+      ctx.drawImage(mouseimageleft, canvas.width/2-this.width/2, canvas.height/2-this.height);
+    } else {
+      ctx.drawImage(mouseimage, canvas.width/2-this.width/2, canvas.height/2-this.height);
+    }
   }
 
   move() {
     if (this.controls.left) {
+      this.facingLeft = true;
       this.velocity.x = -this.speed;
     } else if (this.controls.right) {
+      this.facingLeft = false;
       this.velocity.x = this.speed;
     } else {
       this.velocity.x = 0;
