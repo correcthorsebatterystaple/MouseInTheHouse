@@ -8,6 +8,13 @@ class Cat {
         if (isSolid(this.position.x+Math.sign(this.dx)*256, this.position.y-256)) {
             this.dx *= -1;
         }
+        let distance = Math.sqrt(
+            Math.pow(this.position.x - mouse.position.x, 2) +
+            Math.pow(this.position.y - mouse.position.y, 2)
+        );
+        if (distance < 64) {
+            window.location.href = "./yougoteaten.html";
+        }
     }
     draw() {
         let scr = camera.pixelToScreenSpace(this.position);
