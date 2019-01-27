@@ -184,7 +184,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-loadLevel("./testlevel.json", () => {
+loadLevel("./Map-2.json", () => {
     update();
 });
 const camera = new Camera();
