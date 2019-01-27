@@ -6,6 +6,7 @@ class Mouse {
     this.height = height;
     this.onGround = false;
     this.speed = 2;
+    this.climbCounter = 30;
   }
 
   draw() {
@@ -27,6 +28,23 @@ class Mouse {
       x:this.position.x+this.velocity.x,
       y:this.position.y+this.velocity.y
     };
+
+     //climb
+    if (this.controls.up) {
+      if (this.climbCounter > 0) {
+        console.log(this.climbCounter);
+        this.climbCounter--;
+        newPos = {
+          x:this.position.x+this.velocity.x,
+          y:this.position.y-6
+        };
+      } else if (this.climbCounter == 0) {
+        this.climbCounter = -100;
+      }
+    } else {
+      if (this.climbCounter < 30)
+        this.climbCounter++;
+    }
 
     let currPos = {
       x:this.position.x,
@@ -84,10 +102,6 @@ class Mouse {
       this.velocity.y = -10;
       this.onGround = false;
     }
-  }
-
-  climb() {
-
   }
 
   teleport(position = this.position) {
