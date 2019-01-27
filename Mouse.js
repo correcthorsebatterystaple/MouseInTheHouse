@@ -1,7 +1,9 @@
 class Mouse {
-  constructor(position={x:0,y:0}, velocity={x:1,y:0}) {
+  constructor(position={x:0,y:0}, velocity={x:1,y:0}, width=10, height=10) {
     this.position = position;
     this.velocity = velocity;
+    this.width = width;
+    this.height = height;
     this.onGround = true;
   }
 
@@ -9,15 +11,26 @@ class Mouse {
 
   }
 
-  move(velocity=this.velocity) {
-    this.velocity = velocity;
-    return this.velocity;
+  move() {
+    newPos = {
+      x:this.position.x+this.velocity.x,
+      y:this.position.y+this.velocity.y
+    };
+    if (this.onGround) {
+      this.position = newPos;
+    } else {
+      this.velocity.y += 0.1;
+      if (isSolid(newPos.x, newPos.y)) {
+        this.velocity.y = 0;
+        this.onGround = true;
+      }
+    }
   }
 
   jump() {
-    if (!this.onGround) {
+    if (this.onGround) {
+      this.velocity.y = -1;
       this.onGround = false;
-      this.velocity.y = 1;
     }
   }
 
@@ -29,16 +42,13 @@ class Mouse {
     this.position = position;
   }
 
+  setVelocity(velocity=this.velocity) {
+    this.velocity = velocity;
+    return this.velocity;
+  }
+
   update() {
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
-    if (!this.onGround) {
-      this.velocity.y -= 0.1;
-      if (this.velocity.y <= 0) {
-        this.velocity.y = 0;
-        this.onGround = true;
-      }
-    }
+    move();
   }
 
 }
