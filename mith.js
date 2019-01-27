@@ -190,7 +190,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-loadLevel("./Map-2.json", () => {
+loadLevel("./Map-2-2.json", () => {
     update();
 });
 const camera = new Camera();
