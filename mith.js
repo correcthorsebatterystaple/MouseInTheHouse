@@ -188,11 +188,14 @@ function update() {
     mouse.controls = controls;
     mouse.draw();
     mouse.update();
-    cat.update();
-    cat.draw();
+    cats.forEach(cat=> {
+        cat.update();
+        cat.draw();
+    });
     cheeses.forEach(cheese=> {
         cheese.update();
-    })
+    });
+
     currentLevel.holes.forEach(hole => {
         hole.update();
     });

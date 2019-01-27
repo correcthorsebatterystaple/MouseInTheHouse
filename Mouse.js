@@ -144,7 +144,7 @@ class Mouse {
       Math.pow(this.position.x - president.position.x, 2) +
       Math.pow(this.position.y - president.position.y, 2)
     );
-    if (distance < 1000) {
+    if (distance < 300) {
       console.log("you win");
     }
   }
