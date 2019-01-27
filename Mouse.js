@@ -22,27 +22,61 @@ class Mouse {
     if (this.controls.jump) {
       this.jump();
     }
+    
     let newPos = {
       x:this.position.x+this.velocity.x,
       y:this.position.y+this.velocity.y
     };
-    this.position = newPos; 
-    
+
+    let currPos = {
+      x:this.position.x,
+      y:this.position.y
+    };
+
+    // incremental moving for y
+    if (newPos.y < currPos.y) {
+      for (let i = currPos.y; i>newPos.y; i--) {
+        if (!isSolid(this.position.x, i)) {
+          this.position.y = i;
+        } else {
+          break;
+        }
+      }
+    } else if ( newPos.y > currPos.y) {
+      for (let i = currPos.y; i<newPos.y; i++) {
+        if (!isSolid(this.position.x, i)) {
+          this.position.y = i;
+        } else {
+          this.onGround = true;
+          break;
+        }
+      }
+    }
+
+    // incremental moving for x
+    if (newPos.x < currPos.x) {
+      for (let i = currPos.x; i>=newPos.x; i--) {
+        if (!isSolid(i-this.width/2, this.position.y)) {
+          this.position.x = i;
+        } else {
+          break;
+        }
+      }
+    } else if ( newPos.x > currPos.x) {
+      for (let i = currPos.x; i<=newPos.x; i++) {
+        if (!isSolid(i+this.width/2, this.position.y)) {
+          this.position.x = i;
+        } else {
+          break;
+        }
+      }
+    }
+
+    // falling
     if (!this.onGround) {
       this.velocity.y += 0.5;
-      if (isSolid(newPos.x, newPos.y)) {
-        this.velocity.y = 0;
-        this.onGround = true;
-      }
-    } else {
-      if (!isSolid(this.position.x, this.position.y+1)) {
-        this.onGround = false;
-      }
     }
-    while(isSolid(this.position.x, this.position.y)) {
-      this.position.y -= 1;
-      this.onGround = true;
-    }
+
   }
 
   jump() {
