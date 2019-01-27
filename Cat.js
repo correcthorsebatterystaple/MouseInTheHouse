@@ -4,9 +4,13 @@ class Cat {
         this.dx = 1;
     }
     update() {
-        this.position.x += dx;
-        if (isSolid(this.position.x+dx*100, this.position.y)) {
+        this.position.x += this.dx;
+        if (isSolid(this.position.x+this.dx*100, this.position.y)) {
             this.dx *= -1;
         }
+    }
+    draw() {
+        let scr = camera.pixelToScreenSpace(this.position);
+        ctx.drawImage(catimage, scr.x, scr.y);
     }
 }

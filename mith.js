@@ -21,8 +21,8 @@ let controls = {
     jump: false
 }
 let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0});
+let cat = new Cat({x:0,y:0});
 let president = new President({x:0,y:0});
-let cat = {position:{}};
 document.addEventListener('keydown', event => {
     if (event.keyCode == 97-32) {
         controls.left = true;
@@ -173,7 +173,7 @@ class Camera {
 
     pixelToScreenSpace({x, y}) {
         if(!this.xoff) this.draw();
-        return {x:x-xoff,y:y-yoff};
+        return {x:x-this.xoff,y:y-this.yoff};
     }
 }
 
@@ -182,6 +182,8 @@ function update() {
     mouse.controls = controls;
     mouse.draw();
     mouse.update();
+    cat.update();
+    cat.draw();
     currentLevel.holes.forEach(hole => {
         hole.update();
     });
