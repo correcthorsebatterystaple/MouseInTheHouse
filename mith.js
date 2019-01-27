@@ -6,7 +6,6 @@ const tilemap = document.getElementById("tilemap");
 let width  = canvas.width;
 let height = canvas.height;
 
-let mouse = new Mouse({x: 14*32, y:40*32}, {x:0,y:0});
 let currentLevel;
 
 let controls = {
@@ -16,33 +15,38 @@ let controls = {
     down: false,
     jump: false
 }
-canvas.addEventListener('keydown', event => {
-    if (event.keycode == 97) {
+let mouse = new Mouse({x: 14*32, y:40*32}, {x:0,y:0});
+document.addEventListener('keydown', event => {
+    if (event.keyCode == 97-32) {
         controls.left = true;
-    } else if (event.keycode == 100) {
+    } else if (event.keyCode == 100-32) {
         controls.right = true;
-    } else if (event.keycode == 119) {
+    } else if (event.keyCode == 119-32) {
         controls.up = true;
-    } else if (event.keycode == 115) {
+    } else if (event.keyCode == 115-32) {
         controls.down = true;
+    } else if (event.keyCode == 32) {
+        controls.jump = true;
     }
 });
-canvas.addEventListener('keyup', event => {
-    if (event.keycode == 97) {
+document.addEventListener('keyup', event => {
+    if (event.keyCode == 97-32) {
         controls.left = false;
-    } else if (event.keycode == 100) {
+    } else if (event.keyCode == 100-32) {
         controls.right = false;
-    } else if (event.keycode == 119) {
+    } else if (event.keyCode == 119-32) {
         controls.up = false;
-    } else if (event.keycode == 115) {
+    } else if (event.keyCode == 115-32) {
         controls.down = false;
+    } else if (event.keyCode == 32) {
+        controls.jump = false;
     }
 });
 
 const collisionlayer = 0;
 function isSolid(x, y, space="screen") {
     if (space=="screen") {
-        if (currentLevel.layers[collisionlayer].tiles[Math.floor(x/32) + Math.floor(y/32)*currentLevel.width]) {
+        if (currentLevel.layers[collisionlayer].tiles[Math.floor(x/32)%currentLevel.width + Math.floor(y/32)*currentLevel.width]) {
             return true;
         } else {
             return false;
@@ -70,12 +74,10 @@ function loadLevel(path, callback) {
 
 function drawTile(xt, yt, xoff, yoff, layer) {
     let tile = currentLevel.layers[layer].tiles[xt%currentLevel.width + yt*currentLevel.width];
-    console.log(`${layer} ${xt + yt*currentLevel.width}`);
     if (!tile) return;
     let x = xt*32 - xoff;
     let y = yt*32 - yoff;
     let id = tile.id;
-    console.log(tile.id);
     let sx = (id % 8) * 32;
     let sy = Math.floor(id/8)*32;
     ctx.drawImage(tilemap, sx, sy, 32, 32, x, y, 32, 32);
@@ -105,7 +107,11 @@ class Camera {
 
 function update() {
     camera.draw();
+    mouse.controls = controls;
     mouse.draw();
+    mouse.update();
+    ctx.fillStyle = "rgb(200, 170, 80)";
+    ctx.fillRect(width/2-16, height/2-32, 32, 32);
     requestAnimationFrame(update);
 }
 
