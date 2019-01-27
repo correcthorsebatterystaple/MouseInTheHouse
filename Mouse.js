@@ -5,7 +5,7 @@ class Mouse {
     this.width = width;
     this.height = height;
     this.onGround = false;
-    this.speed = 2;
+    this.speed = 5;
     this.climbCounter = 30;
     this.facingLeft = false;
   }

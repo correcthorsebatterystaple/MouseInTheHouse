@@ -130,7 +130,7 @@ class Camera {
     }
 
     draw() {
-        ctx.drawImage(bgimage, 0, 0);
+        ctx.drawImage(bgimage, 0, 0, width, height);
         this.xoff = mouse.position.x - width/2;
         this.yoff = mouse.position.y - height/2;
         this.x1t = Math.floor(this.xoff/32);

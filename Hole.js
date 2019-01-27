@@ -12,7 +12,7 @@ class Hole {
             if (
                 mouse.position.x < this.hole[hole].x+mouse.width/2 &&
                 mouse.position.x > this.hole[hole].x-mouse.width/2 &&
-                mouse.position.y < this.hole[hole].y+mouse.height/2 &&
+                mouse.position.y < this.hole[hole].y+mouse.height &&
                 mouse.position.y > this.hole[hole].y-mouse.height/2
             ) {
                 mouse.position.x = this.hole[otherhole].x;
