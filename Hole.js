@@ -1,5 +1,6 @@
 class Hole {
     constructor(hole1 = {x:0,y:0}, hole2 = {x:0,y:0}, mouse) {
+        this.hole = [];
         this.hole[1] = hole1;
         this.hole[2] = hole2;
         this.mouse = mouse;
@@ -7,16 +8,18 @@ class Hole {
 
     checkTouching(hole) {
         let otherhole = !(hole-1)+1;
-        if (mouse.justTeleported &&
-            mouse.x < this.hole[hole].x+mouse.width &&
-            mouse.x > this.hole[hole].x-mouse.width &&
-            mouse.y < this.hole[hole].y+mouse.height &&
-            mouse.y > this.hole[hole].y-mouse.height) 
-        {
-            mouse.teleport(this.hole[otherhole]);
-            mouse.justTeleported = true;
-        } else {
-            mouse.justTeleported = false;
+        if (!mouse.justTeleported) {
+            if (
+                mouse.position.x < this.hole[hole].x+mouse.width &&
+                mouse.position.x > this.hole[hole].x-mouse.width &&
+                mouse.position.y < this.hole[hole].y+mouse.height &&
+                mouse.position.y > this.hole[hole].y-mouse.height
+            ) {
+                mouse.position.x = this.hole[otherhole].x;
+                mouse.position.y = this.hole[otherhole].y;
+                mouse.justTeleported = true;
+                setTimeout(()=>{mouse.justTeleported=false}, 2000);
+            }
         }
     }
 

@@ -16,7 +16,7 @@ let controls = {
     down: false,
     jump: false
 }
-let mouse = new Mouse({x: 14*32, y:40*32}, {x:0,y:0});
+let mouse = new Mouse({x: 28*32, y:40*32}, {x:0,y:0});
 document.addEventListener('keydown', event => {
     if (event.keyCode == 97-32) {
         controls.left = true;
@@ -47,13 +47,15 @@ document.addEventListener('keyup', event => {
 const collisionlayer = 0;
 function isSolid(x, y, space="screen") {
     if (space=="screen") {
-        if (currentLevel.layers[collisionlayer].tiles[Math.floor(x/32)%currentLevel.width + Math.floor(y/32)*currentLevel.width]) {
+        let tile = currentLevel.layers[collisionlayer].tiles[Math.floor(x/32)%currentLevel.width + Math.floor(y/32)*currentLevel.width];
+        if (tile && tile.id == 56) {
             return true;
         } else {
             return false;
         }
     } else if (space=="tile") {
-        if (currentLevel.layers[collisionlayer].tiles[x%currentLevel.width + y*currentLevel.width]) {
+        let tile = currentLevel.layers[collisionlayer].tiles[x%currentLevel.width + y*currentLevel.width];
+        if (tile && tile.id == 56) {
             return true;
         } else {
             return false;
@@ -77,11 +79,11 @@ function loadLevel(path, callback) {
                     if (tile.id >= 64 && tile.id < 128) {
                         if (tile.id % 2 == 0) {
                             currentLevel.holes[(tile.id-64)/2] = new Hole(
-                                {x: x, y: y}, {x: 0, y: 0}, mouse
+                                {x: x*32, y: y*32}, {x: 0, y: 0}, mouse
                             );
                         } else {
-                            currentLevel.holes[Math.ceil((tile.id-64)/2)].hole2 = {
-                                x: x, y: y
+                            currentLevel.holes[Math.floor((tile.id-64)/2)].hole[2] = {
+                                x: x*32, y: y*32
                             };
                         }
                     }
