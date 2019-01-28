@@ -82,7 +82,7 @@ function loadLevel(path, callback) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            currentLevel = JSON.parse(this.responseText);
+            currentLevel = JSON.parse(JSON.parse(this.responseText));
             currentLevel.holes = [];
             let x = 0, y = 0;
             currentLevel.layers[collisionlayer].tiles.forEach(tile => {
@@ -135,7 +135,7 @@ function loadLevel(path, callback) {
             callback();
         }
     };
-    xmlhttp.open("GET", "https://raw.githubusercontent.com/correcthorsebatterystaple/MouseInTheHouse/master/"+path, true);
+    xmlhttp.open("GET", "/maps/"+path, true);
     xmlhttp.send();
 }
 
@@ -207,7 +207,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-loadLevel(levelpath+".json", () => {
+loadLevel(levelpath, () => {
     update();
 });
 const camera = new Camera();

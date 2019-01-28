@@ -1,0 +1,23 @@
+{
+  "name": "mouseinthehouse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/correcthorsebatterystaple/MouseInTheHouse.git"
+  },
+  "author": "Bobby McCann et al",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/correcthorsebatterystaple/MouseInTheHouse/issues"
+  },
+  "homepage": "https://github.com/correcthorsebatterystaple/MouseInTheHouse#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "tmx-parser": "^1.5.0"
+  }
+}
