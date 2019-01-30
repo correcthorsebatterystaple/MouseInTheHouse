@@ -9,6 +9,7 @@ class Mouse {
     this.climbCounter = 30;
     this.facingLeft = false;
     this.bombcounter = bombtime*60;
+    this.exploded = false;
   }
 
   draw() {
@@ -139,6 +140,7 @@ class Mouse {
   }
 
   explode() {
+    this.exploded = true;
     //booms
     let distance = Math.sqrt(
       Math.pow(this.position.x - president.position.x, 2) +
@@ -153,7 +155,7 @@ class Mouse {
 
   update() {
     this.move();
-    if (this.bombcounter == 0) {
+    if (this.bombcounter == 0 && !this.exploded) {
       this.explode();
     } else {
       this.bombcounter--;

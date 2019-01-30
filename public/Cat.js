@@ -2,6 +2,7 @@ class Cat {
     constructor(position = {x:0,y:0}) {
         this.position = position;
         this.dx = 5;
+        this.killer = false;
     }
     update() {
         this.position.x += this.dx;
@@ -12,8 +13,9 @@ class Cat {
             Math.pow(this.position.x - mouse.position.x, 2) +
             Math.pow(this.position.y - mouse.position.y, 2)
         );
-        if (distance < 32) {
+        if (distance < 32 && !this.killer) {
             window.location.href = "./yougoteaten.html";
+            this.killer = true;
         }
     }
     draw() {
