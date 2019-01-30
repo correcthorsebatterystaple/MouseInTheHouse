@@ -25,8 +25,6 @@ function resize() {
     height = window.innerHeight;
     canvas.width = width;
     canvas.height = height;
-    if (x >= width - dvd.width) x = width - dvd.width - 1;
-    if (y >= height - dvd.height) y = height - dvd.height - 1;
 }
 resize();
 window.addEventListener("resize", resize);
